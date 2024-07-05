@@ -4,6 +4,7 @@ import { ErrorThrow } from './features/ErrorThrowPart/ErrorThrowPart';
 import { SearchPart } from './features/SearchPart/SearchPart';
 import { MainPart } from './features/MainPart/MainPart';
 import './App.css';
+import { ComponentsCaptions } from './data/ComponentsCaptions';
 
 export class App extends Component {
   state = { isLoaded: false };
@@ -14,7 +15,7 @@ export class App extends Component {
 
   render() {
     return (
-      <ErrorBoundary fallback={<h1>OOPS! Something went wrong</h1>}>
+      <ErrorBoundary fallback={<h1>{ComponentsCaptions.ERROR_TITLE}</h1>}>
         <h1>Characters of Star Trek</h1>
         <ErrorThrow />
         <SearchPart onSearch={this.handleOnSearch} />

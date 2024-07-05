@@ -1,4 +1,4 @@
-import { HandleOnDrawItems } from '../App.types';
+import { HandleOnDrawItems, HandleOnSearch } from '../App.types';
 import { BASE_URL, CURRENT_PAGE, LIMIT_PARAM, PAGE_LIMIT, PAGE_PARAM } from './api.constants';
 
 export class Connection {
@@ -12,7 +12,7 @@ export class Connection {
       .catch((error) => console.error(error));
   }
 
-  async search(searchValue: string, callback: HandleOnDrawItems) {
+  async search(searchValue: string, callback: HandleOnDrawItems, onSearch: HandleOnSearch) {
     fetch(`${BASE_URL}?${PAGE_PARAM}${CURRENT_PAGE}&${LIMIT_PARAM}${PAGE_LIMIT}`, {
       method: 'POST',
       body: new URLSearchParams({
@@ -25,7 +25,7 @@ export class Connection {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.characters);
+        onSearch(true);
         callback(data.characters);
       })
       .catch((error) => console.error(error));

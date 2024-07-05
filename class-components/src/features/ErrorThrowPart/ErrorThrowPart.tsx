@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
-import { ERROR_MSG } from './ErrorThrowPart.constants';
 import styles from './ErrorThrowPart.module.css';
 
 export class ErrorThrow extends Component<{ children?: React.ReactNode }, { counter: number }> {
@@ -14,7 +13,7 @@ export class ErrorThrow extends Component<{ children?: React.ReactNode }, { coun
 
   render() {
     if (this.state.counter) {
-      throw new Error(ERROR_MSG);
+      throw new Error(ComponentsCaptions.ERROR);
     }
     return (
       <button className={styles.btn} onClick={this.handleClick}>

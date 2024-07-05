@@ -11,7 +11,7 @@
     "format:fix": "prettier --config .prettierrc src/**/*.{ts,tsx} --write",
     "ci:format": "prettier --config .prettierrc src/**/*.{ts,tsx} --check",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "cd .. && husky class-components/.husky"
   },
   "dependencies": {
     "react": "^18.3.1",
