@@ -1,9 +1,10 @@
 import { Component } from 'react';
-import { ComponentCaptions } from '../../data/componentCaptions';
-import { connection } from '../../services/api';
+import { ComponentsCaptions } from '../../data/ComponentsCaptions';
 import { Store } from '../../store/store';
+import { HandleOnSearch } from '../../App.types';
+import styles from './SearchPart.module.css';
 
-export class SearchPart extends Component {
+export class SearchPart extends Component<{ onSearch: HandleOnSearch }, { inputValue: string }> {
   state = { inputValue: Store.getSearchValue() };
 
   handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -12,19 +13,17 @@ export class SearchPart extends Component {
 
   handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     Store.setSearchValue(this.state.inputValue);
-    connection.search(this.state.inputValue);
+    this.props.onSearch(false);
   };
-
-  componentDidMount(): void {
-    connection.search(this.state.inputValue);
-  }
 
   render() {
     return (
-      <>
-        <input type="text" value={this.state.inputValue} onChange={this.handleChange} />
-        <button onClick={this.handleClick}>{ComponentCaptions.SEARCH}</button>
-      </>
+      <section className={styles.search}>
+        <input className={styles.input} type="text" value={this.state.inputValue} onChange={this.handleChange} />
+        <button className={styles.btn} onClick={this.handleClick}>
+          {ComponentsCaptions.SEARCH}
+        </button>
+      </section>
     );
   }
 }

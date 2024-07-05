@@ -1,0 +1,12 @@
+.btn {
+  background-color: var(--brown);
+  border: 2px outset var(--dark);
+  color: var(--purple);
+}
+.input {
+  font-size: 1rem;
+  color: var(--dark);
+}
+.search {
+
+}
