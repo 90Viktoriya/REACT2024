@@ -10,6 +10,22 @@ export class Connection {
       .then((data) => console.log(data))
       .catch((error) => console.error(error));
   }
+
+  async search(searchValue: string) {
+    fetch(`${BASE_URL}?${PAGE_PARAM}${CURRENT_PAGE}&${LIMIT_PARAM}${PAGE_LIMIT}`, {
+      method: 'POST',
+      body: new URLSearchParams({
+        name: searchValue
+      }),
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
+  }
 }
 
 export const connection = new Connection();

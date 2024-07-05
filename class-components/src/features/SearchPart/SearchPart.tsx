@@ -1,19 +1,29 @@
 import { Component } from 'react';
 import { ComponentCaptions } from '../../data/componentCaptions';
 import { connection } from '../../services/api';
+import { Store } from '../../store/store';
 
 export class SearchPart extends Component {
+  state = { inputValue: Store.getSearchValue() };
+
+  handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    this.setState({ inputValue: event?.target.value });
+  };
+
+  handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
+    Store.setSearchValue(this.state.inputValue);
+    connection.search(this.state.inputValue);
+  };
+
   componentDidMount(): void {
-    this.setupConnection();
+    connection.search(this.state.inputValue);
   }
-  setupConnection() {
-    connection.getResult();
-  }
+
   render() {
     return (
       <>
-        <input type="text" />
-        <button>{ComponentCaptions.SEARCH}</button>
+        <input type="text" value={this.state.inputValue} onChange={this.handleChange} />
+        <button onClick={this.handleClick}>{ComponentCaptions.SEARCH}</button>
       </>
     );
   }
