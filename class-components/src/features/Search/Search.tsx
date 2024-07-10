@@ -4,7 +4,7 @@ import { Store } from '../../store/store';
 import { HandleOnValueChange } from '../../App.types';
 import styles from './Search.module.css';
 
-export class Search extends Component<{ onSearch: HandleOnValueChange }> {
+export class Search extends Component<{ onSearch: HandleOnValueChange }, { inputValue: string }> {
   state = { inputValue: Store.getSearchValue() };
 
   handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {

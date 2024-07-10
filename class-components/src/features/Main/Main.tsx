@@ -8,13 +8,11 @@ export class Main extends Component {
 
   componentDidMount(): void {
     this.setState({ searchValue: Store.getSearchValue() });
-    console.log(`2 ${this.state.searchValue}`);
   }
 
   handleOnValueChange = (searchValue: string) => {
     this.setState({ searchValue });
     Store.setSearchValue(searchValue);
-    console.log(`1 ${this.state.searchValue}`);
   };
 
   render() {
