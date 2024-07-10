@@ -1,9 +1,6 @@
-import React, { Component, ErrorInfo } from 'react';
+import React, { Component, ErrorInfo, PropsWithChildren } from 'react';
 
-export class ErrorBoundary extends Component<
-  { fallback: React.ReactNode; children: React.ReactNode },
-  { hasError: boolean }
-> {
+export class ErrorBoundary extends Component<PropsWithChildren<{ fallback: React.ReactNode }>, { hasError: boolean }> {
   state = { hasError: false };
 
   static getDerivedStateFromError() {
@@ -15,9 +12,14 @@ export class ErrorBoundary extends Component<
   }
 
   render() {
-    if (this.state.hasError) {
-      return this.props.fallback;
+    const {
+      props: { fallback, children },
+      state: { hasError }
+    } = this;
+
+    if (hasError) {
+      return fallback;
     }
-    return this.props.children;
+    return children;
   }
 }
