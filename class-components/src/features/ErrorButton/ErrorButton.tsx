@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
-import styles from './ErrorThrowPart.module.css';
+import styles from './ErrorButton.module.css';
 
-export class ErrorThrow extends Component<{ children?: React.ReactNode }, { counter: number }> {
+export class ErrorButton extends Component<{ children?: React.ReactNode }, { counter: number }> {
   state = { counter: 0 };
 
   handleClick = () => {

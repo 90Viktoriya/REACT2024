@@ -1,10 +1,10 @@
 import { Component } from 'react';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
 import { Store } from '../../store/store';
-import { HandleOnSearch } from '../../App.types';
-import styles from './SearchPart.module.css';
+import { HandleOnValueChange } from '../../App.types';
+import styles from './Search.module.css';
 
-export class SearchPart extends Component<{ onSearch: HandleOnSearch }, { inputValue: string }> {
+export class Search extends Component<{ onSearch: HandleOnValueChange }, { inputValue: string }> {
   state = { inputValue: Store.getSearchValue() };
 
   handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -12,8 +12,7 @@ export class SearchPart extends Component<{ onSearch: HandleOnSearch }, { inputV
   };
 
   handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
-    Store.setSearchValue(this.state.inputValue);
-    this.props.onSearch(false);
+    this.props.onSearch(this.state.inputValue);
   };
 
   render() {
