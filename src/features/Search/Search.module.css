@@ -1,0 +1,10 @@
+.btn {
+  margin-left: 0.1em;
+  background-color: var(--brown);
+  border: 2px outset var(--dark);
+  color: var(--purple);
+}
+.input {
+  font-size: 1.5em;
+  color: var(--dark);
+}

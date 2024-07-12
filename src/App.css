@@ -1,0 +1,27 @@
+
+:root {
+  --purple: #3A2149;
+  --dark: #280D18;
+  --light: #F7F1D1;
+  --light-transparent: #F7F1D180;
+  --blue: #496271;
+  --brown: #DEBB66;
+}
+#root {
+  width: 100%;
+  min-height: 100svh;
+  background-image: url(./assets/background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--dark);
+  color: var(--light);
+  text-align: center;
+}
+p {
+  margin: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+
