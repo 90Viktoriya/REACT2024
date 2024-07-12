@@ -1,27 +1,18 @@
-import { Component } from 'react';
-import { Store } from '../../store/store';
 import { Search } from '../Search/Search';
 import { Result } from '../Result/Result';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
-export class Main extends Component {
-  state = { searchValue: '' };
+export function Main() {
+  const { searchValue, setSearchValue } = useLocalStorage();
 
-  componentDidMount(): void {
-    this.setState({ searchValue: Store.getSearchValue() });
-  }
-
-  handleOnValueChange = (searchValue: string) => {
-    this.setState({ searchValue });
-    Store.setSearchValue(searchValue);
+  const handleOnValueChange = (newSearchValue: string) => {
+    setSearchValue(newSearchValue);
   };
 
-  render() {
-    const { searchValue } = this.state;
-    return (
-      <>
-        <Search onSearch={this.handleOnValueChange} />
-        <Result searchValue={searchValue} />
-      </>
-    );
-  }
+  return (
+    <>
+      <Search onSearch={handleOnValueChange} searchValue={searchValue} />
+      <Result searchValue={searchValue} />
+    </>
+  );
 }

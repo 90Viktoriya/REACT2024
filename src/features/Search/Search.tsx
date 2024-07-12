@@ -1,28 +1,25 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
-import { Store } from '../../store/store';
 import { HandleOnValueChange } from '../../App.types';
 import styles from './Search.module.css';
 
-export class Search extends Component<{ onSearch: HandleOnValueChange }, { inputValue: string }> {
-  state = { inputValue: Store.getSearchValue() };
+export function Search({ onSearch, searchValue }: { onSearch: HandleOnValueChange; searchValue: string }) {
+  const [inputValue, setInputValue] = useState(searchValue);
 
-  handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    this.setState({ inputValue: event?.target.value });
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    setInputValue(event?.target.value);
   };
 
-  handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
-    this.props.onSearch(this.state.inputValue);
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
+    onSearch(inputValue);
   };
 
-  render() {
-    return (
-      <section className={styles.search}>
-        <input className={styles.input} type="text" value={this.state.inputValue} onChange={this.handleChange} />
-        <button className={styles.btn} onClick={this.handleClick}>
-          {ComponentsCaptions.SEARCH}
-        </button>
-      </section>
-    );
-  }
+  return (
+    <section className={styles.search}>
+      <input className={styles.input} type="text" value={inputValue} onChange={handleChange} />
+      <button className={styles.btn} onClick={handleClick}>
+        {ComponentsCaptions.SEARCH}
+      </button>
+    </section>
+  );
 }
