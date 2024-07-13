@@ -29,6 +29,8 @@ export function Router() {
       path: 'page/:page',
       element: <Main searchValue={searchValue} />,
       loader: async ({ params }) => mainLoader(searchValue, Number.parseInt(params.page ?? '0')),
+      action: async ({ request }) => search({ request }, setSearchValue),
+      errorElement: <ErrorPage />,
       children: [
         {
           path: 'details/:uid',

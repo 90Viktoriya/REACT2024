@@ -21,8 +21,11 @@
   min-height: 150px;
   justify-content: space-between;
 }
+.card:hover{
+  background-color: var(--brown);
+}
 .active {
-  background-color: blueviolet;
+  background-color: var(--brown);;
 }
 .title {
   font-size: 2em;
@@ -39,13 +42,18 @@
 }
 
 @media all and (max-width: 1000px) {
-  .main{
+  .result{
     margin: 1em 5em;
   }
 }
 
 @media all and (max-width: 700px) {
-  .main{
+  .result{
     margin: 1em 1em;
+  }
+  .card{
+    min-width: 95%;
+    min-height: 100px;
+    width: 95%;
   }
 }

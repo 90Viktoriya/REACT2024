@@ -7,5 +7,6 @@ export enum ComponentsCaptions {
   UNKNOWN_VALUE = 'unknown',
   ERROR_PAGE = 'OOPS! Page not found',
   PREV = 'Prev',
-  NEXT = 'Next'
+  NEXT = 'Next',
+  CLOSE = 'Close'
 }
