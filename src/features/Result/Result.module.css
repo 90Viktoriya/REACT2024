@@ -1,4 +1,4 @@
-.main {
+.result {
   margin: 1em 10em;
   display: flex;
   flex-direction: row;
@@ -21,6 +21,9 @@
   min-height: 150px;
   justify-content: space-between;
 }
+.active {
+  background-color: blueviolet;
+}
 .title {
   font-size: 2em;
   color: var(--dark);
@@ -34,6 +37,7 @@
 .span {
   color: var(--dark);
 }
+
 @media all and (max-width: 1000px) {
   .main{
     margin: 1em 5em;

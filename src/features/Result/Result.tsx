@@ -1,50 +1,41 @@
-import { useCallback, useEffect, useState } from 'react';
-import { connection } from '../../services/api';
-import { Characters } from '../../App.types';
 import styles from './Result.module.css';
-import { Loader } from '../../components/Loader';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
+import { NavLink, useLoaderData } from 'react-router-dom';
+import { Characters, Page } from '../../services/api.types';
+import { RouterPath } from '../Router/Router.enum';
+import { Pagination } from '../Pagination/Pagination';
 
-export function Result({ searchValue }: { searchValue: string }) {
-  const [data, setData] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+export function Result() {
+  const { characters } = useLoaderData() as { characters: Characters[]; page: Page };
 
-  const loadData = useCallback((): Promise<void> => {
-    setIsLoaded(false);
-    return connection.search(searchValue, handleOnDrawItems);
-  }, [searchValue]);
-
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
-
-  const handleOnDrawItems = (data: []) => {
-    setData(data);
-    setIsLoaded(true);
-  };
-
-  if (!isLoaded) {
-    return <Loader />;
-  }
-  if (!data.length) {
+  if (!characters.length) {
     return <h2 className={styles.nothing}>{ComponentsCaptions.NOTHING_FOUND}</h2>;
   }
   return (
-    <section className={styles.main}>
-      {data.map((item: Characters) => (
-        <div key={item.uid} className={styles.card}>
-          <p className={styles.title}>{item.name}</p>
-          <div className={styles.description}>
-            <p>
-              Gender: <span className={styles.span}>{item.gender ?? ComponentsCaptions.UNKNOWN_VALUE}</span>
-            </p>
-            <p className={styles.description}>
-              Year of birthday:{' '}
-              <span className={styles.span}>{item.yearOfBirth ?? ComponentsCaptions.UNKNOWN_VALUE}</span>
-            </p>
-          </div>
-        </div>
-      ))}
-    </section>
+    <>
+      <section className={styles.result}>
+        {characters.map((item: Characters) => (
+          <NavLink
+            key={item.uid}
+            to={`${RouterPath.DETAILS}/${item.uid}`}
+            className={({ isActive }: { isActive: boolean }) =>
+              isActive ? `${styles.card} ${styles.active}` : `${styles.card}`
+            }
+          >
+            <p className={styles.title}>{item.name}</p>
+            <div className={styles.description}>
+              <p>
+                Gender: <span className={styles.span}>{item.gender ?? ComponentsCaptions.UNKNOWN_VALUE}</span>
+              </p>
+              <p className={styles.description}>
+                Year of birthday:{' '}
+                <span className={styles.span}>{item.yearOfBirth ?? ComponentsCaptions.UNKNOWN_VALUE}</span>
+              </p>
+            </div>
+          </NavLink>
+        ))}
+      </section>
+      <Pagination />
+    </>
   );
 }

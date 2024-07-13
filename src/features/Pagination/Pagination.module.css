@@ -1,0 +1,16 @@
+.pagination {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  min-height: 40px;
+}
+.inactive {
+  border: 2px outset var(--dark);
+  pointer-events: none;
+  cursor: none;
+}
+.active {
+  border: 2px outset var(--dark);
+  cursor: pointer;
+}

@@ -1,25 +1,22 @@
 import { useState } from 'react';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
-import { HandleOnValueChange } from '../../App.types';
 import styles from './Search.module.css';
+import { useFetcher } from 'react-router-dom';
 
-export function Search({ onSearch, searchValue }: { onSearch: HandleOnValueChange; searchValue: string }) {
+export function Search({ searchValue }: { searchValue: string }) {
   const [inputValue, setInputValue] = useState(searchValue);
+  const fetcher = useFetcher();
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setInputValue(event?.target.value);
   };
 
-  const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
-    onSearch(inputValue);
-  };
-
   return (
-    <section className={styles.search}>
-      <input className={styles.input} type="text" value={inputValue} onChange={handleChange} />
-      <button className={styles.btn} onClick={handleClick}>
+    <fetcher.Form method="post" className={styles.search}>
+      <input name="searchValue" className={styles.input} type="text" value={inputValue} onChange={handleChange} />
+      <button type="submit" className={styles.btn}>
         {ComponentsCaptions.SEARCH}
       </button>
-    </section>
+    </fetcher.Form>
   );
 }
