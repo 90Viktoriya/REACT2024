@@ -4,6 +4,5 @@ import { RouterParams } from '../Router.enum';
 
 export async function detailedLoader({ params }: { params: Params<RouterParams.UID> }) {
   const character = await connection.getCharacter(params.uid);
-  console.log(character);
   return character;
 }

@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Params, RouterProvider } from 'react-router-dom';
 import { Main } from '../../pages/Main/Main';
 import { ErrorPage } from '../../pages/ErrorPage/ErrorPage';
 import { DetailedCard } from '../DetailedCard/DetailedCard';
@@ -6,34 +6,47 @@ import { mainLoader } from './Loaders/mainLoader';
 import { detailedLoader } from './Loaders/detailedLoader';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { search } from './Actions/search';
+import { RouterParams, RouterPath } from './Router.enum';
+import { useCallback } from 'react';
 
 export function Router() {
   const { searchValue, setSearchValue } = useLocalStorage();
+
+  const rootLoader = useCallback(async () => mainLoader(searchValue, 0), [searchValue]);
+  const pageLoader = useCallback(
+    async ({ params }: { params: Params<RouterParams.PAGE> }) =>
+      mainLoader(searchValue, Number.parseInt(params.page ?? '0')),
+    [searchValue]
+  );
+  const searchAction = useCallback(
+    async ({ request }: { request: Request }) => search({ request }, setSearchValue),
+    [setSearchValue]
+  );
 
   const router = createBrowserRouter([
     {
       path: '/',
       element: <Main searchValue={searchValue} />,
       errorElement: <ErrorPage />,
-      loader: async () => mainLoader(searchValue, 0),
-      action: async ({ request }) => search({ request }, setSearchValue),
+      loader: rootLoader,
+      action: searchAction,
       children: [
         {
-          path: 'details/:uid',
+          path: `${RouterPath.DETAILS}/:${RouterParams.UID}`,
           element: <DetailedCard />,
           loader: detailedLoader
         }
       ]
     },
     {
-      path: 'page/:page',
+      path: `${RouterPath.PAGE}/:${RouterParams.PAGE}`,
       element: <Main searchValue={searchValue} />,
-      loader: async ({ params }) => mainLoader(searchValue, Number.parseInt(params.page ?? '0')),
-      action: async ({ request }) => search({ request }, setSearchValue),
+      loader: pageLoader,
+      action: searchAction,
       errorElement: <ErrorPage />,
       children: [
         {
-          path: 'details/:uid',
+          path: `${RouterPath.DETAILS}/:${RouterParams.UID}`,
           element: <DetailedCard />,
           loader: detailedLoader
         }

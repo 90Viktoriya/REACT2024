@@ -1,12 +1,30 @@
 .details{
   display: flex;
+  color: var(--dark);
   flex-direction: column;
   align-items: center;
   width: 45%;
+  font-size: 1.2em;
+}
+
+.description{
+  background-color: var(--light-transparent);
+  width: 60%;
+  padding: 2em;
+  border: 1px solid var(--light);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  text-align: start;
+}
+.block{
+  margin-bottom: 1em;
 }
 .close {
   width: 100px;
   height: 40px;
+  margin-top: 1em;
   border: 2px outset var(--dark);
   border-radius: 8px;
   background-color: var(--brown);

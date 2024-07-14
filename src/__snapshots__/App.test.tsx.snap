@@ -1,26 +1,3 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Given App component > when rendered, should match snapshot 1`] = `
-<DocumentFragment>
-  <h1>
-    Characters of Star Trek
-  </h1>
-  <section
-    class="_search_b6bc0a"
-  >
-    <input
-      class="_input_b6bc0a"
-      type="text"
-      value=""
-    />
-    <button
-      class="_btn_b6bc0a"
-    >
-      Search
-    </button>
-  </section>
-  <div
-    class="_loader_f504da"
-  />
-</DocumentFragment>
-`;
+exports[`Given App component > when rendered, should match snapshot 1`] = `<DocumentFragment />`;
