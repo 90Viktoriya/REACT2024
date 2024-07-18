@@ -1,4 +1,4 @@
-import { ErrorBoundary } from './components/ErrorBoundary';
+import { ErrorBoundary } from './components//ErrorBoundary/ErrorBoundary';
 import './App.css';
 import { ComponentsCaptions } from './data/ComponentsCaptions';
 import { Router } from './features/Router/Router';

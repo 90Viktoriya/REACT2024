@@ -1,5 +1,5 @@
 import { describe, expect, Mock, vi } from 'vitest';
-import { cleanup, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Main } from './Main';
 import { useNavigation } from 'react-router-dom';
 vi.mock('react-router-dom', async () => {
@@ -18,10 +18,9 @@ vi.mock('../../features/Search/Search', () => ({
 vi.mock('../../features/Result/Result', () => ({
   Result: () => <div>Result test</div>
 }));
-vi.mock('../../components/Loader', () => ({
+vi.mock('../../components/Loader/Loader', () => ({
   Loader: () => <div>Loader</div>
 }));
-afterEach(() => cleanup());
 describe('Given Main component', () => {
   it('when navigation state = "loading", loader should be displayed', () => {
     (useNavigation as Mock).mockReturnValue({
@@ -29,7 +28,8 @@ describe('Given Main component', () => {
     });
     const searchValue = 'Test Value';
     const screen = render(<Main searchValue={searchValue} />);
-    expect(screen.findByText('Loader')).toBeTruthy();
+    expect(screen.queryByText('Loader')).toBeTruthy();
+    expect(screen.queryByText('Result test')).toBeFalsy();
   });
   it('when navigation state not "loading", result should be displayed', () => {
     (useNavigation as Mock).mockReturnValue({
@@ -37,6 +37,7 @@ describe('Given Main component', () => {
     });
     const searchValue = 'Test Value';
     const screen = render(<Main searchValue={searchValue} />);
-    expect(screen.findByText('Result test')).toBeTruthy();
+    expect(screen.queryByText('Result test')).toBeTruthy();
+    expect(screen.queryByText('Loader')).toBeFalsy();
   });
 });

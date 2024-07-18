@@ -22,7 +22,7 @@ vi.mocked(useLoaderData).mockReturnValue({
   episodes: [{}],
   movies: [{}]
 });
-vi.mock('../../components/Loader', () => ({
+vi.mock('../../components/Loader/Loader', () => ({
   Loader: () => <div>Loader</div>
 }));
 describe('Given DetailedCard component', () => {
@@ -35,7 +35,8 @@ describe('Given DetailedCard component', () => {
         <DetailedCard />
       </MemoryRouter>
     );
-    expect(screen.findByText('Loader')).toBeTruthy();
+    expect(screen.queryByText('Loader')).toBeTruthy();
+    expect(screen.queryByText('Detailed card test')).toBeFalsy();
   });
   it('when rendered, should contain relevant data', () => {
     (useNavigation as Mock).mockReturnValue({
@@ -46,6 +47,7 @@ describe('Given DetailedCard component', () => {
         <DetailedCard />
       </MemoryRouter>
     );
-    expect(screen.findByText('Detailed card test')).toBeTruthy();
+    expect(screen.queryByText('Detailed card test')).toBeTruthy();
+    expect(screen.queryByText('Loader')).toBeFalsy();
   });
 });

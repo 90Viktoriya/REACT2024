@@ -2,7 +2,7 @@ import { Search } from '../../features/Search/Search';
 import { Result } from '../../features/Result/Result';
 import { Outlet, useLocation, useNavigate, useNavigation } from 'react-router-dom';
 import styles from './Main.module.css';
-import { Loader } from '../../components/Loader';
+import { Loader } from '../../components/Loader/Loader';
 import { MouseEventHandler, useCallback, useMemo } from 'react';
 import { RouterPath } from '../../features/Router/Router.enum';
 
