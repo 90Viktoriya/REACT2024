@@ -1,13 +1,14 @@
 import styles from './Result.module.css';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
-import { NavLink, useLoaderData } from 'react-router-dom';
-import { Characters, Page } from '../../services/api.types';
+import { NavLink } from 'react-router-dom';
+import { Characters } from '../../services/api.types';
 import { RouterPath } from '../Router/Router.enum';
 import { Pagination } from '../Pagination/Pagination';
 import { FieldCaptions } from '../../data/FieldCaptions';
+import { useMainLoaderData } from '../../hooks/useMainLoaderData';
 
 export function Result() {
-  const { characters } = useLoaderData() as { characters: Characters[]; page: Page };
+  const { characters } = useMainLoaderData();
 
   if (!characters.length) {
     return <h2 className={styles.nothing}>{ComponentsCaptions.NOTHING_FOUND}</h2>;
