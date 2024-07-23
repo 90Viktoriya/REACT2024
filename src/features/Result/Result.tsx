@@ -6,6 +6,7 @@ import { RouterPath } from '../Router/Router.enum';
 import { Pagination } from '../Pagination/Pagination';
 import { FieldCaptions } from '../../data/FieldCaptions';
 import { useMainLoaderData } from '../../hooks/useMainLoaderData';
+import { Selector } from '../Selector/Selector';
 
 export function Result() {
   const { characters } = useMainLoaderData();
@@ -25,15 +26,18 @@ export function Result() {
             }
           >
             <p className={styles.title}>{item.name}</p>
-            <div className={styles.description}>
-              <p>
-                {FieldCaptions.GENDER}
-                <span className={styles.span}>{item.gender ?? ComponentsCaptions.UNKNOWN_VALUE}</span>
-              </p>
-              <p className={styles.description}>
-                {FieldCaptions.YEAR_OF_BIRTH}
-                <span className={styles.span}>{item.yearOfBirth ?? ComponentsCaptions.UNKNOWN_VALUE}</span>
-              </p>
+            <div className={styles.bottom}>
+              <Selector uid={item.uid} />
+              <div className={styles.description}>
+                <p>
+                  {FieldCaptions.GENDER}
+                  <span className={styles.span}>{item.gender ?? ComponentsCaptions.UNKNOWN_VALUE}</span>
+                </p>
+                <p className={styles.description}>
+                  {FieldCaptions.YEAR_OF_BIRTH}
+                  <span className={styles.span}>{item.yearOfBirth ?? ComponentsCaptions.UNKNOWN_VALUE}</span>
+                </p>
+              </div>
             </div>
           </NavLink>
         ))}

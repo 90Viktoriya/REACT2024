@@ -31,9 +31,14 @@
   font-size: 2em;
   color: var(--dark);
 }
+.bottom {
+  display: flex;
+  flex-direction: row;
+}
 .description {
   color: var(--purple);
 }
+
 .nothing {
   color: var(--dark);
 }
