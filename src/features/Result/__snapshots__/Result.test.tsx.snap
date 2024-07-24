@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Given Result component > when rendered, should match snapshot 1`] = `
+<DocumentFragment>
+  <h2
+    class="_nothing_cc01d9"
+  >
+    Sorry, nothing found
+  </h2>
+</DocumentFragment>
+`;

@@ -1,0 +1,27 @@
+.pagination {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  min-height: 40px;
+  text-align: center;
+  gap: 10px;
+  color: var(--dark);
+}
+.inactive {
+  width: 80px;
+  border: 2px outset var(--dark);
+  pointer-events: none;
+  cursor: none;
+  background-color: var(--light-transparent);
+  color: var(--dark);
+  border-radius: 8px;
+}
+.active {
+  width: 80px;
+  border: 2px outset var(--dark);
+  background-color: var(--brown);
+  cursor: pointer;
+  color: var(--purple);
+  border-radius: 8px;
+}

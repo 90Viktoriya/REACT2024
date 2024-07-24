@@ -1,33 +1,46 @@
-import { HandleOnDrawItems } from '../App.types';
-import { BASE_URL, CURRENT_PAGE, LIMIT_PARAM, PAGE_LIMIT, PAGE_PARAM } from './api.constants';
+import { BASE_URL, FETCH_ERROR, LIMIT_PARAM, PAGE_LIMIT, PAGE_PARAM, SEARCH, UID_PARAM } from './api.constants';
+import { Character, CharacterResponse, Response } from './api.types';
 
 export class Connection {
-  async getResult() {
-    const response = await fetch(`${BASE_URL}?${PAGE_PARAM}${CURRENT_PAGE}&${LIMIT_PARAM}${PAGE_LIMIT}`, {
-      method: 'GET'
-    });
-    response
-      .json()
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+  async getCharacters(searchValue: string, currentPage: number): Promise<Response | null> {
+    try {
+      const response = await fetch(`${BASE_URL}${SEARCH}?${PAGE_PARAM}${currentPage}&${LIMIT_PARAM}${PAGE_LIMIT}`, {
+        method: 'POST',
+        body: new URLSearchParams({
+          name: searchValue
+        }),
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
+      if (!response.ok) {
+        throw new Error(FETCH_ERROR);
+      }
+      const data: Response = await response.json();
+      return data;
+    } catch (error) {
+      return null;
+    }
   }
 
-  async search(searchValue: string, callback: HandleOnDrawItems) {
-    fetch(`${BASE_URL}?${PAGE_PARAM}${CURRENT_PAGE}&${LIMIT_PARAM}${PAGE_LIMIT}`, {
-      method: 'POST',
-      body: new URLSearchParams({
-        name: searchValue
-      }),
-      headers: {
-        accept: 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded'
+  async getCharacter(uid: string | undefined): Promise<Character | null> {
+    try {
+      const response = await fetch(`${BASE_URL}?${UID_PARAM}${uid}`, {
+        method: 'GET',
+        headers: {
+          accept: 'application/json'
+        }
+      });
+      if (!response.ok) {
+        throw new Error(FETCH_ERROR);
       }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        callback(data.characters);
-      })
-      .catch((error) => console.error(error));
+      const data: CharacterResponse = await response.json();
+      const character = data.character;
+      return character;
+    } catch (error) {
+      return null;
+    }
   }
 }
 

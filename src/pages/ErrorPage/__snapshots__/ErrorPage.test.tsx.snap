@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Given List component > When rendered, should match snapshot 1`] = `
+<DocumentFragment>
+  <h1>
+    OOPS! Page not found
+  </h1>
+</DocumentFragment>
+`;

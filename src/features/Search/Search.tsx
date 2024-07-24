@@ -1,28 +1,45 @@
-import { Component } from 'react';
+import { MouseEventHandler, useCallback, useState } from 'react';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
-import { Store } from '../../store/store';
-import { HandleOnValueChange } from '../../App.types';
 import styles from './Search.module.css';
+import { useFetcher, useLocation, useNavigate } from 'react-router-dom';
+import { RouterPath } from '../Router/Router.enum';
 
-export class Search extends Component<{ onSearch: HandleOnValueChange }, { inputValue: string }> {
-  state = { inputValue: Store.getSearchValue() };
+export function Search({ searchValue }: { searchValue: string }) {
+  const [inputValue, setInputValue] = useState(searchValue);
+  const fetcher = useFetcher();
 
-  handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    this.setState({ inputValue: event?.target.value });
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleOnClick: MouseEventHandler = useCallback(
+    (event) => {
+      if (
+        event.currentTarget instanceof HTMLElement &&
+        event.currentTarget === event.target &&
+        location.pathname.includes(RouterPath.DETAILS)
+      ) {
+        navigate('..');
+      }
+    },
+    [location.pathname, navigate]
+  );
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    setInputValue(event?.target.value);
   };
 
-  handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
-    this.props.onSearch(this.state.inputValue);
-  };
-
-  render() {
-    return (
-      <section className={styles.search}>
-        <input className={styles.input} type="text" value={this.state.inputValue} onChange={this.handleChange} />
-        <button className={styles.btn} onClick={this.handleClick}>
-          {ComponentsCaptions.SEARCH}
-        </button>
-      </section>
-    );
-  }
+  return (
+    <fetcher.Form method="post" className={styles.search}>
+      <input
+        name="searchValue"
+        className={styles.input}
+        type="text"
+        value={inputValue}
+        onChange={handleChange}
+        onClick={handleOnClick}
+      />
+      <button type="submit" className={styles.btn}>
+        {ComponentsCaptions.SEARCH}
+      </button>
+    </fetcher.Form>
+  );
 }
