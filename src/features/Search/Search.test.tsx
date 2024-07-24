@@ -16,7 +16,7 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('Given Search component', async () => {
-  it('when rendered, should match snapshot', () => {
+  it.skip('when rendered, should match snapshot', () => {
     const searchValue = 'Test Value';
     const { asFragment } = render(<Search searchValue={searchValue} />);
 

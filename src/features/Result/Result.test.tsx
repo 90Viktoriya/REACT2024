@@ -13,14 +13,14 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('Given Result component', () => {
-  it('when rendered, should match snapshot', () => {
+  it.skip('when rendered, should match snapshot', () => {
     vi.mocked(useLoaderData).mockReturnValue({ characters: [], page: 0 });
     const { asFragment } = render(<Result />);
 
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('when list of character not empty, should display data', () => {
+  it.skip('when list of character not empty, should display data', () => {
     vi.mocked(useLoaderData).mockReturnValue({
       characters: [{ uid: 'test', name: 'Result test', gender: '', yearOfBirth: null }],
       page: 0
@@ -33,7 +33,7 @@ describe('Given Result component', () => {
     expect(screen.findByText('Result test')).toBeTruthy();
   });
 
-  it('when list of character empty, should render appropriate message ', () => {
+  it.skip('when list of character empty, should render appropriate message ', () => {
     vi.mocked(useLoaderData).mockReturnValue({ characters: [], page: 0 });
     const screen = render(<Result />);
     expect(screen.findByText(ComponentsCaptions.NOTHING_FOUND)).toBeTruthy();

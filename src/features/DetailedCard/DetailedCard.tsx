@@ -1,16 +1,17 @@
-import { Link, useNavigation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Loader } from '../../components/Loader/Loader';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
 import styles from './DetailedCard.module.css';
-import { NavigationState } from '../Router/Router.enum';
 import { FieldCaptions } from '../../data/FieldCaptions';
-import { useDetailedLoaderData } from '../../hooks/useDetailedLoaderData';
 import { DetailsBlock } from './DetailsBlock/DetailsBlock';
+import { useGetCharacterByUidQuery } from '../../services/apiRTK';
 
 export function DetailedCard() {
-  const character = useDetailedLoaderData();
-  const navigation = useNavigation();
-  if (navigation.state === NavigationState.LOADING) {
+  const params = useParams();
+  const currentUID = params.uid || '';
+  const { data, isFetching } = useGetCharacterByUidQuery(currentUID);
+  const character = data?.character;
+  if (isFetching) {
     return (
       <section className={styles.details}>
         <Loader />

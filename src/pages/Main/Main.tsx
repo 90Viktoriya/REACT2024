@@ -1,13 +1,24 @@
 import { Search } from '../../features/Search/Search';
 import { Result } from '../../features/Result/Result';
-import { Outlet, useLocation, useNavigate, useNavigation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import styles from './Main.module.css';
 import { Loader } from '../../components/Loader/Loader';
-import { MouseEventHandler, useCallback, useMemo } from 'react';
+import { MouseEventHandler, useCallback, useEffect, useMemo } from 'react';
 import { RouterPath } from '../../features/Router/Router.enum';
+import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
+import { useGetCharactersByNameQuery } from '../../services/apiRTK';
+import { setCurrentPage } from '../../features/slices/navigation/navigationSlice';
 
-export function Main({ searchValue }: { searchValue: string }) {
-  const navigation = useNavigation();
+export function Main() {
+  const searchValue = useAppSelector((state) => state.navigation.searchValue);
+  const { page: currentPage = 0 } = useParams();
+  const calculatedPage = +currentPage;
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(setCurrentPage(calculatedPage));
+  }, [calculatedPage, dispatch]);
+  const { isFetching } = useGetCharactersByNameQuery({ name: searchValue, page: calculatedPage });
+
   const navigate = useNavigate();
   const location = useLocation();
   const isDetailed = useMemo(() => location.pathname.includes(RouterPath.DETAILS), [location.pathname]);
@@ -20,7 +31,7 @@ export function Main({ searchValue }: { searchValue: string }) {
     },
     [isDetailed, navigate]
   );
-  if (navigation.state === 'loading' && !isDetailed) {
+  if (isFetching && !isDetailed) {
     return (
       <section className={styles.main}>
         <Loader />
@@ -32,7 +43,7 @@ export function Main({ searchValue }: { searchValue: string }) {
       <h1>Characters of Star Trek</h1>
       <section className={styles.main}>
         <section className={isDetailed ? styles.left : styles.center} onClick={handleOnClick}>
-          <Search searchValue={searchValue} />
+          <Search />
           <Result />
         </section>
         {isDetailed && <Outlet />}

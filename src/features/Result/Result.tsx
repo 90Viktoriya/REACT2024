@@ -5,11 +5,15 @@ import { Characters } from '../../services/api.types';
 import { RouterPath } from '../Router/Router.enum';
 import { Pagination } from '../Pagination/Pagination';
 import { FieldCaptions } from '../../data/FieldCaptions';
-import { useMainLoaderData } from '../../hooks/useMainLoaderData';
 import { Selector } from '../Selector/Selector';
+import { useAppSelector } from '../../hooks/ReduxHooks';
+import { useGetCharactersByNameQuery } from '../../services/apiRTK';
 
 export function Result() {
-  const { characters } = useMainLoaderData();
+  const searchValue = useAppSelector((state) => state.navigation.searchValue);
+  const currentPage = useAppSelector((state) => state.navigation.currentPage);
+  const { data } = useGetCharactersByNameQuery({ name: searchValue, page: currentPage });
+  const characters = data?.characters || [];
 
   if (!characters.length) {
     return <h2 className={styles.nothing}>{ComponentsCaptions.NOTHING_FOUND}</h2>;
