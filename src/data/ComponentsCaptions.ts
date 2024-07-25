@@ -8,5 +8,7 @@ export enum ComponentsCaptions {
   ERROR_PAGE = 'OOPS! Page not found',
   PREV = 'Prev',
   NEXT = 'Next',
-  CLOSE = 'Close'
+  CLOSE = 'Close',
+  UNSELECT = 'Unselect all',
+  DOWNLOAD = 'Download'
 }
