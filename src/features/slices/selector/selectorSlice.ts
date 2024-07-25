@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import selectorState from './selectorSlice.interface';
+import selectorState, { selectedItem } from './selectorSlice.interface';
 
 export const initialState: selectorState = {
   selectedItems: [],
@@ -10,12 +10,12 @@ export const selectorSlice = createSlice({
   name: 'selector',
   initialState,
   reducers: {
-    add: (state, action: PayloadAction<string>) => {
+    add: (state, action: PayloadAction<selectedItem>) => {
       state.selectedItems.push(action.payload);
       state.count += 1;
     },
     remove: (state, action: PayloadAction<string>) => {
-      state.selectedItems = state.selectedItems.filter((item) => item !== action.payload);
+      state.selectedItems = state.selectedItems.filter((item) => item.uid !== action.payload);
       state.count -= 1;
     },
     removeAll: (state) => {

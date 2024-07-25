@@ -28,10 +28,10 @@ export function Main() {
   const handleOnClick: MouseEventHandler = useCallback(
     (event) => {
       if (event.currentTarget instanceof HTMLElement && event.currentTarget === event.target && isDetailed) {
-        navigate('..');
+        navigate(location.pathname.slice(0, location.pathname.indexOf(RouterPath.DETAILS)));
       }
     },
-    [isDetailed, navigate]
+    [isDetailed, location.pathname, navigate]
   );
   if (isFetching && !isDetailed) {
     return (
