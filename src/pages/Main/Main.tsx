@@ -8,9 +8,11 @@ import { RouterPath } from '../../features/Router/Router.enum';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { useGetCharactersByNameQuery } from '../../services/apiRTK';
 import { setCurrentPage } from '../../features/slices/navigation/navigationSlice';
+import { Flyout } from '../../features/Flyout/Flyout';
 
 export function Main() {
   const searchValue = useAppSelector((state) => state.navigation.searchValue);
+  const selectedCount = useAppSelector((state) => state.selector.count);
   const { page: currentPage = 0 } = useParams();
   const calculatedPage = +currentPage;
   const dispatch = useAppDispatch();
@@ -40,14 +42,17 @@ export function Main() {
   }
   return (
     <>
-      <h1>Characters of Star Trek</h1>
-      <section className={styles.main}>
-        <section className={isDetailed ? styles.left : styles.center} onClick={handleOnClick}>
-          <Search />
-          <Result />
+      <div className={styles.wrapper}>
+        <h1>Characters of Star Trek</h1>
+        <section className={styles.main}>
+          <section className={isDetailed ? styles.left : styles.center} onClick={handleOnClick}>
+            <Search />
+            <Result />
+          </section>
+          {isDetailed && <Outlet />}
         </section>
-        {isDetailed && <Outlet />}
-      </section>
+      </div>
+      {!!selectedCount && <Flyout />}
     </>
   );
 }
