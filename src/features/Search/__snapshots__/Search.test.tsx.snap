@@ -2,22 +2,20 @@
 
 exports[`Given Search component > when rendered, should match snapshot 1`] = `
 <DocumentFragment>
-  <form
+  <div
     class="_search_b6bc0a"
-    method="post"
   >
     <input
       class="_input_b6bc0a"
       name="searchValue"
       type="text"
-      value="Test Value"
+      value="search"
     />
     <button
       class="_btn_b6bc0a"
-      type="submit"
     >
       Search
     </button>
-  </form>
+  </div>
 </DocumentFragment>
 `;

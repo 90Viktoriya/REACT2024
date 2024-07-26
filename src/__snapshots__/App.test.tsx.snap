@@ -2,12 +2,12 @@
 
 exports[`Given App component > when rendered, should match snapshot 1`] = `
 <DocumentFragment>
-  <section
-    class="_main_6d1f25"
+  <div
+    class="_light_9d7740 _wrapper_9d7740"
   >
     <div
       class="_loader_bf668d"
     />
-  </section>
+  </div>
 </DocumentFragment>
 `;

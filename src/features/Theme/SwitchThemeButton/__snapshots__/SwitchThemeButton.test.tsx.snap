@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Given SwitchThemeButton component > when rendered, should match snapshot 1`] = `
+<DocumentFragment>
+  <button
+    class="_switch_bea301"
+  >
+    SWITCH theme
+  </button>
+</DocumentFragment>
+`;

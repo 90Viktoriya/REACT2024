@@ -30,7 +30,7 @@ export function Flyout() {
 
   return (
     <div className={styles.flyout}>
-      Count of selected items: <span>{selectedCount}</span>
+      {ComponentsCaptions.ITEMS_COUNT} <span>{selectedCount}</span>
       <button className={`${styles.btn} ${styles.first}`} onClick={handleOnClickUnselect}>
         {ComponentsCaptions.UNSELECT}
       </button>

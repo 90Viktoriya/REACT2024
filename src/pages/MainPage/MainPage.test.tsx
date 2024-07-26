@@ -1,43 +1,37 @@
 import { describe, expect, Mock, vi } from 'vitest';
 import { render } from '@testing-library/react';
-import { Main } from './MainPage';
-import { useNavigation } from 'react-router-dom';
-vi.mock('react-router-dom', async () => {
-  const mod = await vi.importActual('react-router-dom');
-  return {
-    ...mod,
-    useNavigation: vi.fn(),
-    useNavigate: vi.fn(),
-    useFetcher: vi.fn(),
-    useLocation: () => ({ pathname: '/' })
-  };
-});
-vi.mock('../../features/Search/Search', () => ({
-  Search: () => <div>Search</div>
+import { MainPage } from './MainPage';
+import { useGetCharactersByNameQuery } from '../../services/apiRTK';
+
+vi.mock('../../hooks/ReduxHooks', () => ({
+  useAppSelector: vi.fn(),
+  useAppDispatch: () => vi.fn()
 }));
-vi.mock('../../features/Result/Result', () => ({
-  Result: () => <div>Result test</div>
+vi.mock('../../services/apiRTK', () => ({
+  useGetCharactersByNameQuery: vi.fn()
 }));
 vi.mock('../../components/Loader/Loader', () => ({
   Loader: () => <div>Loader</div>
 }));
-describe('Given Main component', () => {
-  it.skip('when navigation state = "loading", loader should be displayed', () => {
-    (useNavigation as Mock).mockReturnValue({
-      state: 'loading'
+vi.mock('../../features/Main/Main', () => ({
+  Main: () => <div>Main test</div>
+}));
+
+describe('Given MainPage component', () => {
+  it('when data is fetching, loader should be displayed', () => {
+    (useGetCharactersByNameQuery as Mock).mockReturnValue({
+      isFetching: true
     });
-    const searchValue = 'Test Value';
-    const screen = render(<Main searchValue={searchValue} />);
+    const screen = render(<MainPage />);
     expect(screen.queryByText('Loader')).toBeTruthy();
-    expect(screen.queryByText('Result test')).toBeFalsy();
+    expect(screen.queryByText('Main test')).toBeFalsy();
   });
-  it.skip('when navigation state not "loading", result should be displayed', () => {
-    (useNavigation as Mock).mockReturnValue({
-      state: 'idle'
+  it('when data is fetching, loader should be displayed', () => {
+    (useGetCharactersByNameQuery as Mock).mockReturnValue({
+      isFetching: false
     });
-    const searchValue = 'Test Value';
-    const screen = render(<Main searchValue={searchValue} />);
-    expect(screen.queryByText('Result test')).toBeTruthy();
+    const screen = render(<MainPage />);
+    expect(screen.queryByText('Main test')).toBeTruthy();
     expect(screen.queryByText('Loader')).toBeFalsy();
   });
 });
