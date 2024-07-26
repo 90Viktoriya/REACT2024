@@ -2,14 +2,13 @@ import { Link } from 'react-router-dom';
 import styles from './Pagination.module.css';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
 import { RouterPath } from '../Router/Router.enum';
+import { useGetCharactersResponse } from '../../hooks/useGetCharactersResponse';
 import { useAppSelector } from '../../hooks/ReduxHooks';
-import { useGetCharactersByNameQuery } from '../../services/apiRTK';
 
 export function Pagination() {
-  const searchValue = useAppSelector((state) => state.navigation.searchValue);
-  const currentPage = useAppSelector((state) => state.navigation.currentPage);
-  const { data } = useGetCharactersByNameQuery({ name: searchValue, page: currentPage });
+  const data = useGetCharactersResponse();
   const page = data?.page;
+  const currentPage = useAppSelector((state) => state.navigation.currentPage);
 
   return (
     <div className={styles.pagination}>

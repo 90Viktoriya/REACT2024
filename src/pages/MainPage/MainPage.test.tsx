@@ -1,6 +1,6 @@
 import { describe, expect, Mock, vi } from 'vitest';
 import { render } from '@testing-library/react';
-import { Main } from './Main';
+import { Main } from './MainPage';
 import { useNavigation } from 'react-router-dom';
 vi.mock('react-router-dom', async () => {
   const mod = await vi.importActual('react-router-dom');

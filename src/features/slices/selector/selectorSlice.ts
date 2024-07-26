@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import selectorState, { selectedItem } from './selectorSlice.interface';
-
-export const initialState: selectorState = {
-  selectedItems: [],
-  count: 0
-};
+import { selectedItem } from './selectorSlice.interface';
+import { initialState } from './selectorSlice.constants';
 
 export const selectorSlice = createSlice({
   name: 'selector',

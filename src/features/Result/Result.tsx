@@ -6,13 +6,10 @@ import { RouterPath } from '../Router/Router.enum';
 import { Pagination } from '../Pagination/Pagination';
 import { FieldCaptions } from '../../data/FieldCaptions';
 import { Selector } from '../Selector/Selector';
-import { useAppSelector } from '../../hooks/ReduxHooks';
-import { useGetCharactersByNameQuery } from '../../services/apiRTK';
+import { useGetCharactersResponse } from '../../hooks/useGetCharactersResponse';
 
 export function Result() {
-  const searchValue = useAppSelector((state) => state.navigation.searchValue);
-  const currentPage = useAppSelector((state) => state.navigation.currentPage);
-  const { data } = useGetCharactersByNameQuery({ name: searchValue, page: currentPage });
+  const data = useGetCharactersResponse();
   const characters = data?.characters || [];
 
   if (!characters.length) {

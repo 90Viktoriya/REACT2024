@@ -1,24 +1,24 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Main } from '../../pages/Main/Main';
+import { MainPage } from '../../pages/MainPage/MainPage';
 import { ErrorPage } from '../../pages/ErrorPage/ErrorPage';
 import { DetailedCard } from '../DetailedCard/DetailedCard';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { RouterParams, RouterPath } from './Router.enum';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
-import { setSearchValue as setSearchValueAction } from '../slices/navigation/navigationSlice';
+import { setSearchValue } from '../slices/navigation/navigationSlice';
 
 export function Router() {
   const { searchValue } = useLocalStorage();
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(setSearchValueAction(searchValue));
+    dispatch(setSearchValue(searchValue));
   }, [dispatch, searchValue]);
 
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Main />,
+      element: <MainPage />,
       errorElement: <ErrorPage />,
       children: [
         {
@@ -29,7 +29,7 @@ export function Router() {
     },
     {
       path: `${RouterPath.PAGE}/:${RouterParams.PAGE}`,
-      element: <Main />,
+      element: <MainPage />,
       errorElement: <ErrorPage />,
       children: [
         {

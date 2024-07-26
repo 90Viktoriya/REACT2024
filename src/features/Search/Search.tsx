@@ -3,13 +3,12 @@ import { ComponentsCaptions } from '../../data/ComponentsCaptions';
 import styles from './Search.module.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { RouterPath } from '../Router/Router.enum';
-import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
+import { useAppDispatch } from '../../hooks/ReduxHooks';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { setSearchValue as setSearchValueAction } from '../../features/slices/navigation/navigationSlice';
+import { setSearchValue } from '../../features/slices/navigation/navigationSlice';
 
 export function Search() {
-  const searchValue = useAppSelector((state) => state.navigation.searchValue);
-  const { setSearchValue } = useLocalStorage();
+  const { searchValue, setValue } = useLocalStorage();
   const [inputValue, setInputValue] = useState(searchValue);
   const dispatch = useAppDispatch();
 
@@ -33,10 +32,10 @@ export function Search() {
   };
 
   const handleOnButtonClick = useCallback(() => {
-    setSearchValue(inputValue);
-    dispatch(setSearchValueAction(inputValue));
+    setValue(inputValue);
+    dispatch(setSearchValue(inputValue));
     navigate('..');
-  }, [dispatch, inputValue, navigate, setSearchValue]);
+  }, [dispatch, inputValue, navigate, setValue]);
 
   return (
     <div className={styles.search}>
