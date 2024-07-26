@@ -8,7 +8,7 @@ export const DetailsBlock = <T extends ListItem>({ title, itemsList, detailsList
     {itemsList.map((listItem) => (
       <div className={styles.block} key={listItem.uid}>
         {detailsList.map(({ title: detailsTitle, key }) => (
-          <p>
+          <p key={detailsTitle}>
             {detailsTitle}
             {listItem[key]?.toString() ?? ComponentsCaptions.UNKNOWN_VALUE}
           </p>

@@ -41,6 +41,7 @@
 }
 
 .nothing {
+  font-size: 2em;
   color: var(--dark);
 }
 .span {

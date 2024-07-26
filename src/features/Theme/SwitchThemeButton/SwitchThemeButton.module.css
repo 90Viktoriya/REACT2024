@@ -1,6 +1,4 @@
-.btn {
-  margin-left: 0.1em;
-  font-size: 1em;
+.switch {
   cursor: pointer;
   background-color: var(--brown);
   border: 2px outset var(--dark);
@@ -8,9 +6,5 @@
   border-radius: 8px;
   width: 100px;
   height: 40px;
-}
-.input {
-  font-size: 1.5em;
-  color: var(--dark);
-  background-color: var(--light);
+  margin-left: 2em;
 }

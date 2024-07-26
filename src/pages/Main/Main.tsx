@@ -9,8 +9,12 @@ import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
 import { useGetCharactersByNameQuery } from '../../services/apiRTK';
 import { setCurrentPage } from '../../features/slices/navigation/navigationSlice';
 import { Flyout } from '../../features/Flyout/Flyout';
+import { ComponentsCaptions } from '../../data/ComponentsCaptions';
+import { SwitchThemeButton } from '../../features/Theme/SwitchThemeButton/SwitchThemeButton';
+import { useTheme } from '../../hooks/useTheme';
 
 export function Main() {
+  const { isDark } = useTheme();
   const searchValue = useAppSelector((state) => state.navigation.searchValue);
   const selectedCount = useAppSelector((state) => state.selector.count);
   const { page: currentPage = 0 } = useParams();
@@ -35,15 +39,18 @@ export function Main() {
   );
   if (isFetching && !isDetailed) {
     return (
-      <section className={styles.main}>
+      <div className={`${isDark ? styles.dark : styles.light} ${styles.wrapper}`}>
         <Loader />
-      </section>
+      </div>
     );
   }
   return (
-    <>
-      <div className={styles.wrapper}>
-        <h1>Characters of Star Trek</h1>
+    <div className={`${isDark ? styles.dark : styles.light} ${styles.wrapper}`}>
+      <div className={`${styles.top}`}>
+        <div className={`${styles.header}`}>
+          <h1>{ComponentsCaptions.TITLE}</h1>
+          <SwitchThemeButton />
+        </div>
         <section className={styles.main}>
           <section className={isDetailed ? styles.left : styles.center} onClick={handleOnClick}>
             <Search />
@@ -53,6 +60,6 @@ export function Main() {
         </section>
       </div>
       {!!selectedCount && <Flyout />}
-    </>
+    </div>
   );
 }

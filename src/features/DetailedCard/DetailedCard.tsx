@@ -5,10 +5,11 @@ import styles from './DetailedCard.module.css';
 import { FieldCaptions } from '../../data/FieldCaptions';
 import { DetailsBlock } from './DetailsBlock/DetailsBlock';
 import { useGetCharacterByUidQuery } from '../../services/apiRTK';
+import { useMemo } from 'react';
 
 export function DetailedCard() {
   const params = useParams();
-  const currentUID = params.uid || '';
+  const currentUID = useMemo(() => params.uid || '', [params.uid]);
   const { data, isFetching } = useGetCharacterByUidQuery(currentUID);
   const character = data?.character;
   if (isFetching) {

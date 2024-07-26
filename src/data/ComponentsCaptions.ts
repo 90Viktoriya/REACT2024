@@ -10,5 +10,7 @@ export enum ComponentsCaptions {
   NEXT = 'Next',
   CLOSE = 'Close',
   UNSELECT = 'Unselect all',
-  DOWNLOAD = 'Download'
+  DOWNLOAD = 'Download',
+  TITLE = 'Characters of Star Trek',
+  SWITCH_THEME = 'SWITCH theme'
 }
