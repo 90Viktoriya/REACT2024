@@ -18,19 +18,20 @@ describe('Given Result component', () => {
   it('when list of character empty, should render appropriate message ', () => {
     (useGetCharactersResponse as Mock).mockReturnValue({ characters: [], page: 0 });
     const screen = render(<Result />);
-    expect(screen.findByText(ComponentsCaptions.NOTHING_FOUND)).toBeTruthy();
+    expect(screen.queryByText(ComponentsCaptions.NOTHING_FOUND)).toBeTruthy();
   });
 
   it('when list of character not empty, should display data', () => {
     (useGetCharactersResponse as Mock).mockReturnValue({
-      characters: [{ uid: 'test', name: 'Result test', gender: '', yearOfBirth: null }],
-      page: 0
+      characters: [{ uid: 'test', name: 'Result test', gender: '', yearOfBirth: null }]
     });
+
     const screen = render(
       <MemoryRouter>
         <Result />
       </MemoryRouter>
     );
-    expect(screen.findByText('Result test')).toBeTruthy();
+
+    expect(screen.queryByText('Result test')).toBeTruthy();
   });
 });
