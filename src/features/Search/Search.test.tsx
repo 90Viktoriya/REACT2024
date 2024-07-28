@@ -23,9 +23,6 @@ vi.mock('../../hooks/ReduxHooks', () => ({
 vi.mock('../../hooks/useLocalStorage', () => ({
   useLocalStorage: vi.fn()
 }));
-vi.mock('../../hooks/useLocalStorage', () => ({
-  useLocalStorage: vi.fn()
-}));
 
 describe('Given Search component', async () => {
   it('when rendered, should match snapshot', () => {
