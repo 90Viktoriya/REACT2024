@@ -1,3 +1,13 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Given App component > when rendered, should match snapshot 1`] = `<DocumentFragment />`;
+exports[`Given App component > when rendered, should match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="_light_9d7740 _wrapper_9d7740"
+  >
+    <div
+      class="_loader_bf668d"
+    />
+  </div>
+</DocumentFragment>
+`;

@@ -31,10 +31,17 @@
   font-size: 2em;
   color: var(--dark);
 }
+.bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 .description {
   color: var(--purple);
 }
+
 .nothing {
+  font-size: 2em;
   color: var(--dark);
 }
 .span {

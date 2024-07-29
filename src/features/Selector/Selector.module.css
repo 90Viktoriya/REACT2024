@@ -1,0 +1,6 @@
+.checkbox{
+  width: 40px;
+  height: 40px;
+  margin-right: 1em;
+  accent-color: var(--brown);
+}

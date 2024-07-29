@@ -1,13 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 import { Store } from '../store/store';
 
 export function useLocalStorage() {
-  const [searchValue, setSearchValue] = useState(() => Store.getSearchValue());
-  useEffect(() => {
-    if (searchValue === undefined) {
-      return;
-    }
-    Store.setSearchValue(searchValue);
-  }, [searchValue]);
-  return { searchValue, setSearchValue };
+  const [searchValue, setSearchValue] = useState<string>(() => Store.getSearchValue());
+  const setValue = useCallback((value: string) => {
+    setSearchValue(value);
+    Store.setSearchValue(value);
+  }, []);
+  return { searchValue, setValue };
 }

@@ -1,0 +1,10 @@
+.switch {
+  cursor: pointer;
+  background-color: var(--brown);
+  border: 2px outset var(--dark);
+  color: var(--purple);
+  border-radius: 8px;
+  width: 100px;
+  height: 40px;
+  margin-left: 2em;
+}

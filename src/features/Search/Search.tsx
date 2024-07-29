@@ -1,12 +1,16 @@
 import { MouseEventHandler, useCallback, useState } from 'react';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
 import styles from './Search.module.css';
-import { useFetcher, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { RouterPath } from '../Router/Router.enum';
+import { useAppDispatch } from '../../hooks/ReduxHooks';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { setSearchValue } from '../../features/slices/navigation/navigationSlice';
 
-export function Search({ searchValue }: { searchValue: string }) {
+export function Search() {
+  const { searchValue, setValue } = useLocalStorage();
   const [inputValue, setInputValue] = useState(searchValue);
-  const fetcher = useFetcher();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,8 +31,14 @@ export function Search({ searchValue }: { searchValue: string }) {
     setInputValue(event?.target.value);
   };
 
+  const handleOnButtonClick = useCallback(() => {
+    setValue(inputValue);
+    dispatch(setSearchValue(inputValue));
+    navigate('..');
+  }, [dispatch, inputValue, navigate, setValue]);
+
   return (
-    <fetcher.Form method="post" className={styles.search}>
+    <div className={styles.search}>
       <input
         name="searchValue"
         className={styles.input}
@@ -37,9 +47,9 @@ export function Search({ searchValue }: { searchValue: string }) {
         onChange={handleChange}
         onClick={handleOnClick}
       />
-      <button type="submit" className={styles.btn}>
+      <button className={styles.btn} onClick={handleOnButtonClick}>
         {ComponentsCaptions.SEARCH}
       </button>
-    </fetcher.Form>
+    </div>
   );
 }

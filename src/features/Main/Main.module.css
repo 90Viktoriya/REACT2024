@@ -17,9 +17,3 @@
   flex-direction: column;
   cursor: default;
 }
-
-@media all and (max-width: 700px) {
-  .left{
-    font-size: 0.7em;
-  }
-}

@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Given Pagination component > when rendered, should match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="_pagination_f56b67"
+  >
+    <a
+      class="_active_f56b67"
+      href="/"
+    >
+      Prev
+    </a>
+    <a
+      class="_active_f56b67"
+      href="/page/NaN"
+    >
+      Next
+    </a>
+  </div>
+</DocumentFragment>
+`;
