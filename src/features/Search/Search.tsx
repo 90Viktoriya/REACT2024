@@ -13,7 +13,7 @@ export function Search() {
 
   const handleOnClick: MouseEventHandler = useCallback(
     (event) => {
-      if (event.currentTarget instanceof HTMLElement && event.currentTarget === event.target) {
+      if (event.currentTarget instanceof HTMLElement && event.currentTarget === event.target && router.query.details) {
         router.push(`${router.pathname}?search=${inputValue}`);
       }
     },

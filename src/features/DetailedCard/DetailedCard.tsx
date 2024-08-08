@@ -1,34 +1,62 @@
+import { Router, useRouter } from 'next/router';
+import Link from 'next/link';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
 import styles from './DetailedCard.module.css';
 import { FieldCaptions } from '../../data/FieldCaptions';
 import { DetailsBlock } from './DetailsBlock/DetailsBlock';
-import { CharacterResponse } from '../../services/api.types';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import { Character } from '../../services/api.types';
+import { Loader } from '../../components/Loader/Loader';
+import { useEffect, useState } from 'react';
 
-export function DetailedCard({ details }: { details: CharacterResponse }) {
+export function DetailedCard({ details }: { details: Character }) {
   const router = useRouter();
-  const character = details.character;
+  const isDetails = !!router.query.details;
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const start = () => {
+      setIsLoading(true);
+    };
+    const end = () => {
+      setIsLoading(false);
+    };
+    if (isDetails) {
+      Router.events.on('routeChangeStart', start);
+    }
+    Router.events.on('routeChangeComplete', end);
+    Router.events.on('routeChangeError', end);
+    return () => {
+      Router.events.off('routeChangeStart', start);
+      Router.events.off('routeChangeComplete', end);
+      Router.events.off('routeChangeError', end);
+    };
+  }, [isDetails]);
 
+  if (isLoading || !details) {
+    return (
+      <div className={styles.details}>
+        <Loader />
+      </div>
+    );
+  }
   return (
     <section className={styles.details}>
-      <h2>{character?.name}</h2>
+      <h2>{details.name}</h2>
       <div className={styles.description}>
         <p>
           {FieldCaptions.GENDER}
-          {character?.gender ?? ComponentsCaptions.UNKNOWN_VALUE}
+          {details.gender ?? ComponentsCaptions.UNKNOWN_VALUE}
         </p>
         <p>
           {FieldCaptions.YEAR_OF_BIRTH}
-          {character?.yearOfBirth ?? ComponentsCaptions.UNKNOWN_VALUE}
+          {details.yearOfBirth ?? ComponentsCaptions.UNKNOWN_VALUE}
         </p>
         <p>
           {FieldCaptions.YEAR_OF_DEATH}
-          {character?.yearOfDeath ?? ComponentsCaptions.UNKNOWN_VALUE}
+          {details.yearOfDeath ?? ComponentsCaptions.UNKNOWN_VALUE}
         </p>
         <DetailsBlock
           title={FieldCaptions.MOVIES}
-          itemsList={character?.movies ?? []}
+          itemsList={details.movies ?? []}
           detailsList={[
             { title: FieldCaptions.TITLE, key: 'title' },
             { title: FieldCaptions.RELEASE_DATE, key: 'usReleaseDate' }
@@ -36,7 +64,7 @@ export function DetailedCard({ details }: { details: CharacterResponse }) {
         />
         <DetailsBlock
           title={FieldCaptions.EPISODES}
-          itemsList={character?.episodes ?? []}
+          itemsList={details.episodes ?? []}
           detailsList={[
             { title: FieldCaptions.TITLE, key: 'title' },
             { title: FieldCaptions.EPISODE_NUMBER, key: 'episodeNumber' }
@@ -44,7 +72,7 @@ export function DetailedCard({ details }: { details: CharacterResponse }) {
         />
         <DetailsBlock
           title={FieldCaptions.PERFORMERS}
-          itemsList={character?.performers ?? []}
+          itemsList={details.performers ?? []}
           detailsList={[
             { title: FieldCaptions.NAME, key: 'name' },
             { title: FieldCaptions.DATE_OF_BIRTH, key: 'dateOfBirth' },
@@ -53,7 +81,7 @@ export function DetailedCard({ details }: { details: CharacterResponse }) {
         />
       </div>
       <Link
-        href={`${router.pathname}?search=${router.query.search}&page=${router.query.page}`}
+        href={`${router.pathname}?search=${router.query.search ?? ''}&page=${router.query.page ?? '0'}`}
         className={styles.close}
       >
         {ComponentsCaptions.CLOSE}

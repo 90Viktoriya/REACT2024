@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import type { GetServerSidePropsContext } from 'next';
 
 import styles from '../src/pages/MainPage/MainPage.module.css';
@@ -10,14 +10,37 @@ import { SwitchThemeButton } from '../src/features/Theme/SwitchThemeButton/Switc
 import { useTheme } from '../src/hooks/useTheme';
 import { Main } from '../src/features/Main/Main';
 import { connection } from '../src/services/api';
-import { CharacterResponse, CharactersResponse } from '../src/services/api.types';
+import { Character, CharactersResponse } from '../src/services/api.types';
 import getFirstValue from '../src/utils/getFirstValue';
+import Router, { useRouter } from 'next/router';
 
-function Page({ data, details }: { data: CharactersResponse | null; details: CharacterResponse | null }) {
+function Page({ data, details }: { data: CharactersResponse | null; details: Character | null }) {
   const { isDark } = useTheme();
   const selectedCount = useAppSelector((state) => state.selector.count);
+  const router = useRouter();
+  const isDetails = !!router.query.details;
 
-  if (!data) {
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const start = () => {
+      setIsLoading(true);
+    };
+    const end = () => {
+      setIsLoading(false);
+    };
+    if (!isDetails) {
+      Router.events.on('routeChangeStart', start);
+    }
+    Router.events.on('routeChangeComplete', end);
+    Router.events.on('routeChangeError', end);
+    return () => {
+      Router.events.off('routeChangeStart', start);
+      Router.events.off('routeChangeComplete', end);
+      Router.events.off('routeChangeError', end);
+    };
+  }, [isDetails]);
+
+  if (isLoading || !data) {
     return (
       <div className={`${isDark ? styles.dark : styles.light} ${styles.wrapper}`}>
         <Loader />

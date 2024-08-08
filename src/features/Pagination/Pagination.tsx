@@ -13,12 +13,12 @@ export function Pagination({ page }: { page: Page | undefined }) {
 
   return (
     <div className={styles.pagination}>
-      <a
+      <Link
         href={`${router.pathname}?search=${router.query.search}&page=${currentPage - 1}`}
         className={page?.firstPage ? styles.inactive : styles.active}
       >
         {ComponentsCaptions.PREV}
-      </a>
+      </Link>
       <Link
         href={`${router.pathname}?search=${router.query.search}&page=${currentPage + 1}`}
         className={page?.lastPage ? styles.inactive : styles.active}

@@ -1,25 +1,21 @@
+import { useRouter } from 'next/router';
+import { MouseEventHandler, useCallback } from 'react';
 import { Result } from '../Result/Result';
 import { Search } from '../Search/Search';
-import styles from './Main.module.css';
-import { CharacterResponse, CharactersResponse } from '../../services/api.types';
+import { Character, CharactersResponse } from '../../services/api.types';
 import { DetailedCard } from '../DetailedCard/DetailedCard';
+import styles from './Main.module.css';
 
-export function Main({ data, details }: { data: CharactersResponse; details: CharacterResponse | null }) {
-  // const navigate = useNavigate();
-  // const location = useLocation();
-  //const isDetailed = useMemo(() => location.pathname.includes(RouterPath.DETAILS), [location.pathname]);
-
-  /*const handleOnClick: MouseEventHandler = useCallback(
+export function Main({ data, details }: { data: CharactersResponse; details: Character | null }) {
+  const router = useRouter();
+  const handleOnClick: MouseEventHandler = useCallback(
     (event) => {
-      if (event.currentTarget instanceof HTMLElement && event.currentTarget === event.target && isDetailed) {
-        navigate(location.pathname.slice(0, location.pathname.indexOf(RouterPath.DETAILS)));
+      if (event.currentTarget instanceof HTMLElement && event.currentTarget === event.target && details) {
+        router.push(`${router.pathname}?search=${router.query.search ?? ''}&page=${router.query.page ?? '0'}`);
       }
     },
-    [isDetailed, location.pathname, navigate]
-  );*/
-  console.log(data);
-  console.log(details);
-  const handleOnClick = () => {};
+    [details, router]
+  );
 
   return (
     <section className={styles.main}>

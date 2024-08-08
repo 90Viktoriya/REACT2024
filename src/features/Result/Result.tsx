@@ -21,7 +21,7 @@ export function Result({ data }: { data: CharactersResponse }) {
         {characters.map((item: Characters) => (
           <Link
             key={item.uid}
-            href={`${router.pathname}?search=${router.query.search}&page=${router.query.page}&${RouterPath.DETAILS}=${item.uid}`}
+            href={`${router.pathname}?search=${router.query.search ?? ''}&page=${router.query.page ?? '0'}&${RouterPath.DETAILS}=${item.uid}`}
             className={`${styles.card} ${styles.active}`}
           >
             <p className={styles.title}>{item.name}</p>
