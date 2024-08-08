@@ -18,7 +18,7 @@ export type Titles = {
   title: string;
 };
 
-export type Response = {
+export type CharactersResponse = {
   page: Page;
   characters: Characters[];
 };
@@ -99,22 +99,6 @@ export type Character = {
   dayOfBirth: number;
   placeOfBirth: string;
   yearOfDeath: number;
-  monthOfDeath: number;
-  dayOfDeath: number;
-  placeOfDeath: string;
-  height: number;
-  weight: number;
-  deceased: boolean;
-  bloodType: string;
-  maritalStatus: string;
-  serialNumber: string;
-  hologramActivationDate: string;
-  hologramStatus: string;
-  hologramDateStatus: string;
-  hologram: boolean;
-  fictionalCharacter: boolean;
-  mirror: boolean;
-  alternateReality: boolean;
   performers: Performers[];
   episodes: Episodes[];
   movies: Movies[];

@@ -1,24 +1,15 @@
-import { Link, useParams } from 'react-router-dom';
-import { Loader } from '../../components/Loader/Loader';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
 import styles from './DetailedCard.module.css';
 import { FieldCaptions } from '../../data/FieldCaptions';
 import { DetailsBlock } from './DetailsBlock/DetailsBlock';
-import { useGetCharacterByUidQuery } from '../../services/apiRTK';
-import { useMemo } from 'react';
+import { CharacterResponse } from '../../services/api.types';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-export function DetailedCard() {
-  const params = useParams();
-  const currentUID = useMemo(() => params.uid || '', [params.uid]);
-  const { data, isFetching } = useGetCharacterByUidQuery(currentUID);
-  const character = data?.character;
-  if (isFetching) {
-    return (
-      <section className={styles.details}>
-        <Loader />
-      </section>
-    );
-  }
+export function DetailedCard({ details }: { details: CharacterResponse }) {
+  const router = useRouter();
+  const character = details.character;
+
   return (
     <section className={styles.details}>
       <h2>{character?.name}</h2>
@@ -61,7 +52,10 @@ export function DetailedCard() {
           ]}
         />
       </div>
-      <Link to=".." className={styles.close}>
+      <Link
+        href={`${router.pathname}?search=${router.query.search}&page=${router.query.page}`}
+        className={styles.close}
+      >
         {ComponentsCaptions.CLOSE}
       </Link>
     </section>
