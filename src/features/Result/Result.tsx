@@ -1,17 +1,17 @@
 import styles from './Result.module.css';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
-import { NavLink } from 'react-router-dom';
-import { Characters } from '../../services/api.types';
+import { Characters, CharactersResponse } from '../../services/api.types';
 import { RouterPath } from '../Router/Router.enum';
 import { Pagination } from '../Pagination/Pagination';
 import { FieldCaptions } from '../../data/FieldCaptions';
 import { Selector } from '../Selector/Selector';
-import { useGetCharactersResponse } from '../../hooks/useGetCharactersResponse';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-export function Result() {
-  const data = useGetCharactersResponse();
-  const characters = data?.characters || [];
+export function Result({ data }: { data: CharactersResponse }) {
+  const router = useRouter();
 
+  const characters = data.characters ?? [];
   if (!characters.length) {
     return <h2 className={styles.nothing}>{ComponentsCaptions.NOTHING_FOUND}</h2>;
   }
@@ -19,16 +19,14 @@ export function Result() {
     <>
       <section className={styles.result}>
         {characters.map((item: Characters) => (
-          <NavLink
+          <Link
             key={item.uid}
-            to={`${RouterPath.DETAILS}/${item.uid}`}
-            className={({ isActive }: { isActive: boolean }) =>
-              isActive ? `${styles.card} ${styles.active}` : `${styles.card}`
-            }
+            href={`${router.pathname}?search=${router.query.search ?? ''}&page=${router.query.page ?? '0'}&${RouterPath.DETAILS}=${item.uid}`}
+            className={`${styles.card} ${styles.active}`}
           >
             <p className={styles.title}>{item.name}</p>
             <div className={styles.bottom}>
-              <Selector uid={item.uid} />
+              <Selector uid={item.uid} name={item.name} gender={item.gender} yearOfBirth={item.yearOfBirth} />
               <div className={styles.description}>
                 <p>
                   {FieldCaptions.GENDER}
@@ -40,10 +38,10 @@ export function Result() {
                 </p>
               </div>
             </div>
-          </NavLink>
+          </Link>
         ))}
       </section>
-      <Pagination />
+      <Pagination page={data?.page} />
     </>
   );
 }

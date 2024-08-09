@@ -1,31 +1,29 @@
-import { useMemo, MouseEventHandler, useCallback } from 'react';
-import { useNavigate, useLocation, Outlet } from 'react-router-dom';
+import { useRouter } from 'next/router';
+import { MouseEventHandler, useCallback } from 'react';
 import { Result } from '../Result/Result';
-import { RouterPath } from '../Router/Router.enum';
 import { Search } from '../Search/Search';
+import { Character, CharactersResponse } from '../../services/api.types';
+import { DetailedCard } from '../DetailedCard/DetailedCard';
 import styles from './Main.module.css';
 
-export function Main() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const isDetailed = useMemo(() => location.pathname.includes(RouterPath.DETAILS), [location.pathname]);
-
+export function Main({ data, details }: { data: CharactersResponse; details: Character | null }) {
+  const router = useRouter();
   const handleOnClick: MouseEventHandler = useCallback(
     (event) => {
-      if (event.currentTarget instanceof HTMLElement && event.currentTarget === event.target && isDetailed) {
-        navigate(location.pathname.slice(0, location.pathname.indexOf(RouterPath.DETAILS)));
+      if (event.currentTarget instanceof HTMLElement && event.currentTarget === event.target && details) {
+        router.push(`${router.pathname}?search=${router.query.search ?? ''}&page=${router.query.page ?? '0'}`);
       }
     },
-    [isDetailed, location.pathname, navigate]
+    [details, router]
   );
 
   return (
     <section className={styles.main}>
-      <div className={isDetailed ? styles.left : styles.center} onClick={handleOnClick}>
+      <div className={details ? styles.left : styles.center} onClick={handleOnClick}>
         <Search />
-        <Result />
+        <Result data={data} />
       </div>
-      {isDetailed && <Outlet />}
+      {details && <DetailedCard details={details} />}
     </section>
   );
 }

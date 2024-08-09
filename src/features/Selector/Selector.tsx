@@ -1,35 +1,33 @@
-import styles from './Selector.module.css';
+import { useRouter } from 'next/router';
 import { MouseEventHandler, useCallback, useMemo } from 'react';
 import { add, remove } from '../slices/selector/selectorSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHooks';
-import { useLocation } from 'react-router-dom';
-import { RouterPath } from '../Router/Router.enum';
-import { useGetCharactersResponse } from '../../hooks/useGetCharactersResponse';
+import styles from './Selector.module.css';
 
-export function Selector({ uid }: { uid: string }) {
+export function Selector({
+  uid,
+  name,
+  gender,
+  yearOfBirth
+}: {
+  uid: string;
+  name: string;
+  gender: string;
+  yearOfBirth: number;
+}) {
+  const router = useRouter();
   const items = useAppSelector((state) => state.selector.selectedItems);
   const checked = useMemo(() => !!items.filter((item) => item.uid === uid).length, [items, uid]);
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const data = useGetCharactersResponse();
-  const character = useMemo(() => {
-    const characters = data?.characters || [];
-    return characters.filter((item) => item.uid === uid)[0];
-  }, [data?.characters, uid]);
 
   const handleChange = useCallback(() => {
     if (checked) {
       dispatch(remove(uid));
     } else {
-      const url = location.pathname.includes(RouterPath.DETAILS)
-        ? `${location.pathname.slice(0, location.pathname.lastIndexOf('/'))}/${uid}`
-        : location.pathname === '/'
-          ? `/${RouterPath.DETAILS}/${uid}`
-          : `${location.pathname}/${RouterPath.DETAILS}/${uid}`;
-      const { name, gender, yearOfBirth } = character;
+      const url = `${router.pathname}?search=${router.query.search ?? ''}&page=${router.query.page ?? '0'}`;
       dispatch(add({ uid, name, gender, yearOfBirth, url }));
     }
-  }, [character, checked, dispatch, location.pathname, uid]);
+  }, [checked, dispatch, gender, name, router.pathname, router.query.page, router.query.search, uid, yearOfBirth]);
 
   const handleClick: MouseEventHandler = useCallback((event) => {
     event.stopPropagation();
