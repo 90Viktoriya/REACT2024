@@ -9,7 +9,7 @@ exports[`Given Search component > when rendered, should match snapshot 1`] = `
       class="_input_b6bc0a"
       name="searchValue"
       type="text"
-      value="search"
+      value=""
     />
     <button
       class="_btn_b6bc0a"

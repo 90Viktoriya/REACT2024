@@ -1,13 +1,11 @@
 import styles from './Pagination.module.css';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
-import { useAppSelector } from '../../hooks/ReduxHooks';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Page } from '../../services/api.types';
 import getFirstValue from '../../utils/getFirstValue';
 
 export function Pagination({ page }: { page: Page | undefined }) {
-  useAppSelector((state) => state.navigation.currentPage);
   const router = useRouter();
   const currentPage = router.query.page ? Number(getFirstValue(router.query.page)) : 0;
 

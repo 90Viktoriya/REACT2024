@@ -7,13 +7,13 @@ exports[`Given Pagination component > when rendered, should match snapshot 1`] =
   >
     <a
       class="_active_f56b67"
-      href="/"
+      href="undefined?search=undefined&page=-1"
     >
       Prev
     </a>
     <a
       class="_active_f56b67"
-      href="/page/NaN"
+      href="undefined?search=undefined&page=1"
     >
       Next
     </a>

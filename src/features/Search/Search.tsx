@@ -1,16 +1,24 @@
-import { MouseEventHandler, useCallback, useState } from 'react';
+import { MouseEventHandler, useCallback, useEffect, useState } from 'react';
 import { ComponentsCaptions } from '../../data/ComponentsCaptions';
 import styles from './Search.module.css';
 import { useAppDispatch } from '../../hooks/ReduxHooks';
-import { setSearchValue } from '../../features/slices/navigation/navigationSlice';
+import { setSearchValue as setSearchValueDispatch } from '../../features/slices/navigation/navigationSlice';
 import { useRouter } from 'next/router';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 export function Search() {
   const router = useRouter();
-  const searchValue = '';
+  const { searchValue, setSearchValue } = useLocalStorage();
   const [inputValue, setInputValue] = useState(searchValue);
+  const [isFirstLoad, setFirstLoad] = useState(true);
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    if (searchValue.length > 0 && isFirstLoad && searchValue !== router.query.search) {
+      router.push(`${router.pathname}?search=${searchValue}`);
+      setFirstLoad(false);
+    }
+  }, [isFirstLoad, router, searchValue]);
   const handleOnClick: MouseEventHandler = useCallback(
     (event) => {
       if (event.currentTarget instanceof HTMLElement && event.currentTarget === event.target && router.query.details) {
@@ -24,9 +32,10 @@ export function Search() {
   };
 
   const handleOnButtonClick = useCallback(() => {
-    dispatch(setSearchValue(inputValue));
+    dispatch(setSearchValueDispatch(inputValue));
+    setSearchValue(inputValue);
     router.push(`${router.pathname}?search=${inputValue}`);
-  }, [dispatch, inputValue, router]);
+  }, [dispatch, inputValue, router, setSearchValue]);
 
   return (
     <div className={styles.search}>

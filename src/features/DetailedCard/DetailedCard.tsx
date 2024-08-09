@@ -31,7 +31,7 @@ export function DetailedCard({ details }: { details: Character }) {
     };
   }, [isDetails]);
 
-  if (isLoading || !details) {
+  if (isLoading) {
     return (
       <div className={styles.details}>
         <Loader />
